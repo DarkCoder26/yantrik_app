@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mappls_gl/mappls_gl.dart';
+import 'package:yantrik/components/navbar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -47,24 +48,46 @@ class _HomePageState extends State<HomePage> {
     zoom: 14.0,
   );
 
+  static const List<(Color?, Color? background, ShapeBorder?)> customizations =
+      <(Color?, Color?, ShapeBorder?)>[
+    (null, null, null), // The FAB uses its default for null parameters.
+    (null, Colors.green, null),
+    (Colors.white, Colors.green, null),
+    (Colors.white, Colors.green, CircleBorder()),
+  ];
+  int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          // color: Colors.cyan,
-          child: MapplsMap(
-            initialCameraPosition: _kInitialPosition,
-            myLocationEnabled: true,
-            myLocationTrackingMode: MyLocationTrackingMode.Tracking,
-            onUserLocationUpdated: (location) {
-              print('onUserLocationUpdated ${location.position.toJson()}');
-            },
-            onStyleLoadedCallback: () {
-              addMarker();
-            },
-          )),
+        width: double.infinity,
+        height: double.infinity,
+        // color: Colors.cyan,
+        child: MapplsMap(
+          initialCameraPosition: _kInitialPosition,
+          myLocationEnabled: true,
+          myLocationTrackingMode: MyLocationTrackingMode.Tracking,
+          onUserLocationUpdated: (location) {
+            print('onUserLocationUpdated ${location.position.toJson()}');
+          },
+          onStyleLoadedCallback: () {
+            addMarker();
+          },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (BuildContext context) => Navbar()));
+          });
+        },
+        foregroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(83, 101, 198, 1),
+        shape: CircleBorder(),
+        child: const Icon(Icons.navigation),
+      ),
     );
   }
 
