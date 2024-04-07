@@ -1,5 +1,6 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
+import "package:yantrik/components/navbar.dart";
 import "package:yantrik/pages/home_page.dart";
 
 class LoginPage extends StatefulWidget {
@@ -30,27 +31,73 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return _user != null ? const HomePage() : loginPageMethod(context);
+    return Scaffold(
+      body: _user != null ? const Navbar() : loginPageMethod(context),
+    );
   }
 
   Container loginPageMethod(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/login page.png"),
+          image: AssetImage('assets/Login2.png'),
           fit: BoxFit.cover,
         ),
       ),
-      width: double.infinity,
-      height: double.infinity,
+      padding:
+          EdgeInsetsDirectional.all(MediaQuery.of(context).size.width / 50),
       child: Column(
         children: [
-          SizedBox(height: 400),
-          Container(
-            height: 350,
-            width: 350,
-            color: Color.fromRGBO(0, 20, 43, 0.69),
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 1.65,
           ),
+          Container(
+            height: MediaQuery.of(context).size.height / 3,
+            width: MediaQuery.of(context).size.width,
+            margin: const EdgeInsetsDirectional.symmetric(horizontal: 10),
+            padding: const EdgeInsetsDirectional.all(15),
+            decoration: BoxDecoration(
+              color: const Color.fromRGBO(0, 20, 43, 69),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Text(
+                      "User",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    googleSignInButton(context),
+                  ],
+                ),
+                const SizedBox(height: 50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Text(
+                      "Mechanic",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    googleSignInButton(context),
+                  ],
+                )
+              ],
+            ),
+          ),
+          //googleSignInButton(context),
         ],
       ),
     );
@@ -72,17 +119,22 @@ class _LoginPageState extends State<LoginPage> {
           Colors.white,
         ),
       ),
-      onPressed: _handleGoogleSignIn,
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Navbar()),
+        );
+      },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const Text(
-            "Sign in",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-            ),
-          ),
+          // const Text(
+          //   "Sign in",
+          //   style: TextStyle(
+          //     color: Colors.black,
+          //     fontSize: 18,
+          //   ),
+          // ),
           Image.asset(
             'assets/googlelogo.png',
             height: MediaQuery.of(context).size.height / 18,
