@@ -1,7 +1,9 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
+import "package:yantrik/components/mech_navbar.dart";
 import "package:yantrik/components/navbar.dart";
-import "package:yantrik/pages/home_page.dart";
+import "package:yantrik/pages/mech/mech_home_page.dart";
+import "package:yantrik/pages/user/home_page.dart";
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -76,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    googleSignInButton(context),
+                    googleSignInButtonForUser(context),
                   ],
                 ),
                 const SizedBox(height: 50),
@@ -91,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    googleSignInButton(context),
+                    googleSignInButtonForMech(context),
                   ],
                 )
               ],
@@ -112,7 +114,39 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  ElevatedButton googleSignInButton(BuildContext context) {
+  ElevatedButton googleSignInButtonForMech(BuildContext context) {
+    return ElevatedButton(
+      style: const ButtonStyle(
+        backgroundColor: MaterialStatePropertyAll(
+          Colors.white,
+        ),
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const MechHomePage()),
+        );
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          // const Text(
+          //   "Sign in",
+          //   style: TextStyle(
+          //     color: Colors.black,
+          //     fontSize: 18,
+          //   ),
+          // ),
+          Image.asset(
+            'assets/googlelogo.png',
+            height: MediaQuery.of(context).size.height / 18,
+          ),
+        ],
+      ),
+    );
+  }
+
+  ElevatedButton googleSignInButtonForUser(BuildContext context) {
     return ElevatedButton(
       style: const ButtonStyle(
         backgroundColor: MaterialStatePropertyAll(

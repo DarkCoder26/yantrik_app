@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:yantrik/pages/user/home_page.dart';
+import 'package:yantrik/pages/mech/mech_home_page.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:yantrik/pages/user/problem_page.dart';
 
-class Navbar extends StatefulWidget {
-  const Navbar({super.key});
+class MechNavbar extends StatefulWidget {
+  const MechNavbar({super.key});
 
   @override
-  State<Navbar> createState() => _NavbarState();
+  State<MechNavbar> createState() => _MechNavbarState();
 }
 
-class _NavbarState extends State<Navbar> {
+class _MechNavbarState extends State<MechNavbar> {
   int _selectedIndex = 0;
   List<Widget> pages = [
-    const HomePage(),
+    const MechHomePage(),
     const ProblemPage(),
   ];
 
