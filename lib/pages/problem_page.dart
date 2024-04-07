@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +13,36 @@ class ProblemPage extends StatefulWidget {
 }
 
 class _ProblemPageState extends State<ProblemPage> {
+  final TextEditingController ed = TextEditingController();
+  final TextEditingController bd = TextEditingController();
+
+  Future<void> storeProblem() async {
+    final firestore = FirebaseFirestore.instance;
+
+    final collection = firestore.collection("problems");
+
+    final String prob = ed.text;
+    final String tile = bd.text;
+
+    try {
+      await collection.add({
+        'mech': prob,
+        'tile': tile
+      
+      }
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar
+        (content: Text('Our we reach your location ASAP'))
+      );
+      ed.clear();
+      bd.clear();
+    }
+    catch(error){
+      print('Error: $error');
+    }
+  }
   @override
   void initState() {
     super.initState();
@@ -77,8 +108,9 @@ class _ProblemPageState extends State<ProblemPage> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: TextField(
+                      controller: bd,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -97,8 +129,9 @@ class _ProblemPageState extends State<ProblemPage> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: TextField(
+                      controller: ed,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -109,7 +142,7 @@ class _ProblemPageState extends State<ProblemPage> {
               Container(
                 color: Colors.amber,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: storeProblem,
                   child: Text("Submit"),
                 ),
               ),
@@ -141,7 +174,9 @@ class _ProblemPageState extends State<ProblemPage> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(left: 30, top: 100),
+              padding: EdgeInsets.only(
+                left: 30, 
+                top: MediaQuery.of(context).size.height/ 14),
               height: MediaQuery.of(context).size.height * 0.4,
               width: double.infinity,
               decoration: BoxDecoration(
@@ -170,12 +205,12 @@ class _ProblemPageState extends State<ProblemPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 50),
+                  SizedBox(height: MediaQuery.of(context).size.height/23,),
                   Text(
                     "Here are some mechanics near you",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 19,
+                      fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
